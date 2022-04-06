@@ -1,5 +1,9 @@
 <template>
+<div>
+  <loading-full v-model="isLoading"></loading-full>
+
   <q-layout view="lHh Lpr lFf">
+   
     <q-header elevated class="glossy">
       <q-toolbar>
         <q-btn
@@ -76,24 +80,30 @@
     </q-drawer>
 
     <q-page-container>
-      <HelloWorld />
+     <router-view/>
     </q-page-container>
   </q-layout>
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
-
+import { storeToRefs } from "pinia"
+import LoadingFull from "@/components/LoadingFull"
+import {useLoading} from "@/stores/loading"
 export default {
   name: 'LayoutDefault',
 
   components: {
-    HelloWorld
+   LoadingFull
   },
 
   setup () {
+    const loadingStore = useLoading();
+    const {isLoading} = storeToRefs(loadingStore)
+
     return {
+      isLoading,
       leftDrawerOpen: ref(false)
     }
   }
