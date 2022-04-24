@@ -1,26 +1,26 @@
 <template>
   <div class="container-principal">
     <q-card>
-        <q-card-section>
-      <div class="inputs">
-        <q-input square outlined v-model="name" label="Name" />
-        <q-input square type="email" outlined v-model="email" label="Email" />
-        <q-input
-          square
-          outlined
-          v-model="password"
-          type="password"
-          label="Password"
-        />
-        <q-input
-          square
-          outlined
-          v-model="confirmPassword"
-          label="Confirm Password"
-          type="password"
-        />
-        <q-btn color="primary" @click="sendRegister">Register</q-btn>
-      </div>
+      <q-card-section>
+        <div class="inputs">
+          <q-input square outlined v-model="name" label="Name" />
+          <q-input square type="email" outlined v-model="email" label="Email" />
+          <q-input
+            square
+            outlined
+            v-model="password"
+            type="password"
+            label="Password"
+          />
+          <q-input
+            square
+            outlined
+            v-model="confirmPassword"
+            label="Confirm Password"
+            type="password"
+          />
+          <q-btn color="primary" @click="sendRegister">Register</q-btn>
+        </div>
       </q-card-section>
     </q-card>
   </div>
@@ -43,7 +43,7 @@ export default {
         password.value,
         confirmPassword.value
       );
-      alert(res);
+      if (res) this.$router.push({ name: "Login" });
     }
 
     return { name, email, password, confirmPassword, sendRegister };

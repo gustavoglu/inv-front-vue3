@@ -1,35 +1,34 @@
 <template>
   <div class="container-principal">
-    <q-card>
-      <q-card-section>
-        <div class="inputs">
-          <q-input square type="email" outlined v-model="email" label="Email" />
-          <q-input
-            square
-            outlined
-            v-model="password"
-            type="password"
-            label="Password"
-          />
+    <div class="inputs">
+      <q-input square type="email" outlined v-model="email" label="Email" />
+      <q-input
+        square
+        outlined
+        v-model="password"
+        type="password"
+        label="Password"
+      />
 
-          <q-btn color="primary" @click="sendSignIn">Sign In</q-btn>
-        </div>
-      </q-card-section>
-    </q-card>
+      <q-btn color="primary" @click="sendSignIn">Sign In</q-btn>
+    </div>
   </div>
 </template>
 
 <script>
 import { signIn } from "../services/authService";
 import { ref } from "vue";
+import { useRouter } from 'vue-router'
+
 export default {
   setup() {
+    const router = useRouter()
     const email = ref("");
     const password = ref("");
 
     async function sendSignIn() {
       const res = await signIn(email.value, password.value);
-      alert(res);
+      if (res) router.push({ name: "Home" });
     }
 
     return { email, password, sendSignIn };
