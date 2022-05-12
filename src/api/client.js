@@ -10,14 +10,17 @@ client.interceptors.request.use((request) => {
   return request;
 });
 
-client.interceptors.response.use((response) => {
-  const loadingStore = useLoading();
-  loadingStore.loading(false);
-  return response;
-},error =>{
-  const loadingStore = useLoading();
-  loadingStore.loading(false);
-  return error;
-});
+client.interceptors.response.use(
+  (response) => {
+    const loadingStore = useLoading();
+    loadingStore.loading(false);
+    return response;
+  },
+  (error) => {
+    const loadingStore = useLoading();
+    loadingStore.loading(false);
+    return error;
+  }
+);
 
 export default client;

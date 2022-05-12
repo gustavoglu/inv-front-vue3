@@ -23,44 +23,72 @@
             </tr>
           </thead>
           <tbody>
-            <div v-if="inventorys && inventorys.length > 0">
-              <tr v-for="(inventory, index) in inventorys" :key="index">
-                <td>{inventory.place}</td>
-                <td>{inventory.volume}</td>
-                <td>{inventory.batch}</td>
-                <td>{inventory.quantity}</td>
-                <td className="icon-td">
-                  <button>
-                    <img src="../assets/edit.svg" alt="Deletar inventario" />
-                  </button>
+            <tr v-for="(inventory, index) in inventorys" :key="index">
+              <td>{{ inventory.local }}</td>
+              <td>{{ inventory.volume }}</td>
+              <td>{{ inventory.lote }}</td>
+              <td>{{ inventory.quantidade }}</td>
+              <td className="icon-td">
+                <button>
+                  <img src="../assets/edit.svg" alt="Editar inventario" />
+                </button>
 
-                  <button>
-                    <img src="../assets/delete.svg" alt="Deletar inventario" />
-                  </button>
-                </td>
-              </tr>
-            </div>
-
-            <tr v-else>
-              <td>Nenhum inventario encontrado.</td>
+                <button @click="deleteInventory(inventory.id)">
+                  <img src="../assets/delete.svg" alt="Deletar inventario" />
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </main>
-    <modal v-model="modal" title="Cadastrar Inventario"></modal>
+    <modal @confirm="validateForm" v-model="modal" title="Cadastrar Inventario">
+      <q-input type="text" v-model="local" />
+      <q-input type="text" v-model="volume" />
+      <q-input type="text" v-model="lote" />
+      <q-input type="text" v-model="quantidade" />
+    </modal>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import { useInventorys } from "../compositions/useInventorys";
+
 export default {
   setup() {
-    const inventorys = ref([]);
+    const { inventorys, pushInventory, deleteInventory } = useInventorys();
     const modal = ref(false);
+    const local = ref("");
+    const volume = ref("");
+    const lote = ref("");
+    const quantidade = ref("");
+
+    function validateForm() {
+      pushInventory({
+        id: Math.floor(Math.random() * (1000000 - 1) + 1),
+        local: local.value,
+        volume: volume.value,
+        lote: lote.value,
+        quantidade: quantidade.value,
+      });
+
+      local.value = "";
+      volume.value = "";
+      lote.value = "";
+      quantidade.value = "";
+    }
+
     return {
       inventorys,
       modal,
+      local,
+      volume,
+      lote,
+      quantidade,
+      pushInventory,
+      deleteInventory,
+      validateForm,
     };
   },
 };

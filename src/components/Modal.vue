@@ -19,7 +19,9 @@
           </div>
 
           <div class="modal-footer">
-            <button class="modal-button">Confirmar</button>
+            <button class="modal-button" @click="$emit('confirm')">
+              Confirmar
+            </button>
           </div>
         </div>
       </div>

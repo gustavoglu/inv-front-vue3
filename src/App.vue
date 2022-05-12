@@ -4,6 +4,12 @@
 
     <q-layout view="lHh Lpr lFf">
       <q-page-container>
+        <input-app
+          v-model="testeInput"
+          label="Input Label"
+          :rule="(value) => !!value || 'Campo Obrigatório'"
+        ></input-app>
+
         <router-view />
       </q-page-container>
     </q-layout>
@@ -15,6 +21,9 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import LoadingFull from "@/components/LoadingFull";
 import { useLoading } from "@/stores/loading";
+
+// import InputApp from "@/components/InputApp";
+
 export default {
   name: "LayoutDefault",
 
@@ -29,6 +38,7 @@ export default {
     return {
       isLoading,
       leftDrawerOpen: ref(false),
+      testeInput: ref(""),
     };
   },
 };
